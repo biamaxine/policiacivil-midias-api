@@ -13,3 +13,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum UserRole {
+  administrator_plus // pcam
+  administrator // pcam
+  forensic_user // dptc
+  internal_user // pcam
+  external_user // pcam | dptc | tjam | defp | mpam
+}
+
+enum UserDomain {
+  pcam // policiacivil.am.gov.br
+  dptc // dptc.am.gov.br
+  tjam // tjam.jus.br
+  defp // defensoria.am.def.br
+  mpam // mpam.mp.br
+}
+
+model User {
+  id String @id @default(uuid())
+
+  // CREATED && UPDATED
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // DATA
+  email    String     @unique @db.VarChar(255)
+  cpf      String?    @unique @db.VarChar(11)
+  password String?    @db.VarChar(60)
+  name     String?    @db.VarChar(255)
+  role     UserRole   @default(external_user)
+  domain   UserDomain @default(pcam)
+
+  @@index([name])
+  @@index([role])
+  @@index([domain])
+  @@map("users")
+}
