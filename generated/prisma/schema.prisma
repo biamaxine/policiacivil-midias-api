@@ -45,8 +45,31 @@ model User {
   role     UserRole   @default(external_user)
   domain   UserDomain @default(pcam)
 
+  // RELATIONS N:1
+  uploads Media[]
+
   @@index([name])
   @@index([role])
   @@index([domain])
   @@map("users")
+}
+
+model Media {
+  id      String @id @default(uuid())
+  user_id String
+
+  // CREATED && UPDATED
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // DATA
+  filename String @unique @db.VarChar(36)
+  hash     String @unique @db.VarChar(64)
+  metadata Json
+
+  // RELATIONS N:1
+  user User @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@map("media")
 }

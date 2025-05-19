@@ -132,9 +132,23 @@ exports.Prisma.UserScalarFieldEnum = {
   domain: 'domain'
 };
 
+exports.Prisma.MediaScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  filename: 'filename',
+  hash: 'hash',
+  metadata: 'metadata'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -145,6 +159,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.UserRole = exports.$Enums.UserRole = {
   administrator_plus: 'administrator_plus',
@@ -163,7 +183,8 @@ exports.UserDomain = exports.$Enums.UserDomain = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Media: 'Media'
 };
 
 /**
