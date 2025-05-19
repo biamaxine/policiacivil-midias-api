@@ -1,0 +1,33 @@
+FROM node:22.15.1-alpine3.20 as build
+
+WORKDIR /api
+
+RUN apk add --no-cache bash
+
+COPY . .
+
+RUN npm i -g yarn --force
+
+RUN npm i -g @nestjs/cli
+
+RUN yarn install --frozen-lockfile
+
+RUN yarn build
+
+# Final image
+
+FROM node:22.15.1-alpine3.20
+
+RUN apk add --no-cache ffmpeg
+
+WORKDIR /api
+
+COPY --from=build /api/dist ./dist
+COPY --from=build /api/package*.json ./
+COPY --from=build /api/ssl ./
+COPY --from=build /api/.env ./
+COPY --from=build /api/fonts ./fonts
+COPY --from=build /api/node_modules ./node_modules
+COPY --from=build /api/prisma ./prisma
+
+CMD ["node", "dist/main"]
