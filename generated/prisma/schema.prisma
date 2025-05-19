@@ -48,6 +48,9 @@ model User {
   // RELATIONS N:1
   uploads Media[]
 
+  // RELATIONS N:M
+  views View[]
+
   @@index([name])
   @@index([role])
   @@index([domain])
@@ -70,6 +73,31 @@ model Media {
   // RELATIONS N:1
   user User @relation(fields: [user_id], references: [id])
 
+  // RELATIONS N:M
+  views View[]
+
   @@index([user_id])
   @@map("media")
+}
+
+model View {
+  user_id  String
+  media_id String
+
+  // CREATED && UPDATED
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // DATA
+  records    String @db.Text
+  last_token String @db.Text
+
+  // RELATIONS N:M
+  user  User  @relation(fields: [user_id], references: [id])
+  media Media @relation(fields: [media_id], references: [id])
+
+  @@id([user_id, media_id])
+  @@index([user_id])
+  @@index([media_id])
+  @@map("view")
 }

@@ -142,6 +142,15 @@ exports.Prisma.MediaScalarFieldEnum = {
   metadata: 'metadata'
 };
 
+exports.Prisma.ViewScalarFieldEnum = {
+  user_id: 'user_id',
+  media_id: 'media_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  records: 'records',
+  last_token: 'last_token'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -184,7 +193,8 @@ exports.UserDomain = exports.$Enums.UserDomain = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Media: 'Media'
+  Media: 'Media',
+  View: 'View'
 };
 
 /**

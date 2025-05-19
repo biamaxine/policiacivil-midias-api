@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Media = $Result.DefaultSelection<Prisma.$MediaPayload>
+/**
+ * Model View
+ * 
+ */
+export type View = $Result.DefaultSelection<Prisma.$ViewPayload>
 
 /**
  * Enums
@@ -203,6 +208,16 @@ export class PrismaClient<
     * ```
     */
   get media(): Prisma.MediaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.view`: Exposes CRUD operations for the **View** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Views
+    * const views = await prisma.view.findMany()
+    * ```
+    */
+  get view(): Prisma.ViewDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -644,7 +659,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Media: 'Media'
+    Media: 'Media',
+    View: 'View'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -663,7 +679,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "media"
+      modelProps: "user" | "media" | "view"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -815,6 +831,80 @@ export namespace Prisma {
           }
         }
       }
+      View: {
+        payload: Prisma.$ViewPayload<ExtArgs>
+        fields: Prisma.ViewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          findFirst: {
+            args: Prisma.ViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          findMany: {
+            args: Prisma.ViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          create: {
+            args: Prisma.ViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          createMany: {
+            args: Prisma.ViewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          delete: {
+            args: Prisma.ViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          update: {
+            args: Prisma.ViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          deleteMany: {
+            args: Prisma.ViewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ViewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>[]
+          }
+          upsert: {
+            args: Prisma.ViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ViewPayload>
+          }
+          aggregate: {
+            args: Prisma.ViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateView>
+          }
+          groupBy: {
+            args: Prisma.ViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ViewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ViewCountArgs<ExtArgs>
+            result: $Utils.Optional<ViewCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -901,6 +991,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     media?: MediaOmit
+    view?: ViewOmit
   }
 
   /* Types for Logging */
@@ -996,10 +1087,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     uploads: number
+    views: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uploads?: boolean | UserCountOutputTypeCountUploadsArgs
+    views?: boolean | UserCountOutputTypeCountViewsArgs
   }
 
   // Custom InputTypes
@@ -1018,6 +1111,44 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUploadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MediaWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
+  }
+
+
+  /**
+   * Count Type MediaCountOutputType
+   */
+
+  export type MediaCountOutputType = {
+    views: number
+  }
+
+  export type MediaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    views?: boolean | MediaCountOutputTypeCountViewsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MediaCountOutputType without action
+   */
+  export type MediaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaCountOutputType
+     */
+    select?: MediaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MediaCountOutputType without action
+   */
+  export type MediaCountOutputTypeCountViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
   }
 
 
@@ -1222,6 +1353,7 @@ export namespace Prisma {
     role?: boolean
     domain?: boolean
     uploads?: boolean | User$uploadsArgs<ExtArgs>
+    views?: boolean | User$viewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1264,6 +1396,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "created_at" | "updated_at" | "email" | "cpf" | "password" | "name" | "role" | "domain", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uploads?: boolean | User$uploadsArgs<ExtArgs>
+    views?: boolean | User$viewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1273,6 +1406,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       uploads: Prisma.$MediaPayload<ExtArgs>[]
+      views: Prisma.$ViewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1679,6 +1813,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     uploads<T extends User$uploadsArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    views<T extends User$viewsArgs<ExtArgs> = {}>(args?: Subset<T, User$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2129,6 +2264,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.views
+   */
+  export type User$viewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    cursor?: ViewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2324,6 +2483,8 @@ export namespace Prisma {
     hash?: boolean
     metadata?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    views?: boolean | Media$viewsArgs<ExtArgs>
+    _count?: boolean | MediaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["media"]>
 
   export type MediaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2361,6 +2522,8 @@ export namespace Prisma {
   export type MediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "created_at" | "updated_at" | "filename" | "hash" | "metadata", ExtArgs["result"]["media"]>
   export type MediaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    views?: boolean | Media$viewsArgs<ExtArgs>
+    _count?: boolean | MediaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MediaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2373,6 +2536,7 @@ export namespace Prisma {
     name: "Media"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      views: Prisma.$ViewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2777,6 +2941,7 @@ export namespace Prisma {
   export interface Prisma__MediaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    views<T extends Media$viewsArgs<ExtArgs> = {}>(args?: Subset<T, Media$viewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3209,6 +3374,30 @@ export namespace Prisma {
   }
 
   /**
+   * Media.views
+   */
+  export type Media$viewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    cursor?: ViewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
    * Media without action
    */
   export type MediaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3224,6 +3413,1085 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MediaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model View
+   */
+
+  export type AggregateView = {
+    _count: ViewCountAggregateOutputType | null
+    _min: ViewMinAggregateOutputType | null
+    _max: ViewMaxAggregateOutputType | null
+  }
+
+  export type ViewMinAggregateOutputType = {
+    user_id: string | null
+    media_id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    records: string | null
+    last_token: string | null
+  }
+
+  export type ViewMaxAggregateOutputType = {
+    user_id: string | null
+    media_id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    records: string | null
+    last_token: string | null
+  }
+
+  export type ViewCountAggregateOutputType = {
+    user_id: number
+    media_id: number
+    created_at: number
+    updated_at: number
+    records: number
+    last_token: number
+    _all: number
+  }
+
+
+  export type ViewMinAggregateInputType = {
+    user_id?: true
+    media_id?: true
+    created_at?: true
+    updated_at?: true
+    records?: true
+    last_token?: true
+  }
+
+  export type ViewMaxAggregateInputType = {
+    user_id?: true
+    media_id?: true
+    created_at?: true
+    updated_at?: true
+    records?: true
+    last_token?: true
+  }
+
+  export type ViewCountAggregateInputType = {
+    user_id?: true
+    media_id?: true
+    created_at?: true
+    updated_at?: true
+    records?: true
+    last_token?: true
+    _all?: true
+  }
+
+  export type ViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which View to aggregate.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Views
+    **/
+    _count?: true | ViewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ViewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ViewMaxAggregateInputType
+  }
+
+  export type GetViewAggregateType<T extends ViewAggregateArgs> = {
+        [P in keyof T & keyof AggregateView]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateView[P]>
+      : GetScalarType<T[P], AggregateView[P]>
+  }
+
+
+
+
+  export type ViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ViewWhereInput
+    orderBy?: ViewOrderByWithAggregationInput | ViewOrderByWithAggregationInput[]
+    by: ViewScalarFieldEnum[] | ViewScalarFieldEnum
+    having?: ViewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ViewCountAggregateInputType | true
+    _min?: ViewMinAggregateInputType
+    _max?: ViewMaxAggregateInputType
+  }
+
+  export type ViewGroupByOutputType = {
+    user_id: string
+    media_id: string
+    created_at: Date
+    updated_at: Date
+    records: string
+    last_token: string
+    _count: ViewCountAggregateOutputType | null
+    _min: ViewMinAggregateOutputType | null
+    _max: ViewMaxAggregateOutputType | null
+  }
+
+  type GetViewGroupByPayload<T extends ViewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ViewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ViewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ViewGroupByOutputType[P]>
+            : GetScalarType<T[P], ViewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    media_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    records?: boolean
+    last_token?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    media_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    records?: boolean
+    last_token?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    media_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    records?: boolean
+    last_token?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["view"]>
+
+  export type ViewSelectScalar = {
+    user_id?: boolean
+    media_id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    records?: boolean
+    last_token?: boolean
+  }
+
+  export type ViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "media_id" | "created_at" | "updated_at" | "records" | "last_token", ExtArgs["result"]["view"]>
+  export type ViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }
+  export type ViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }
+  export type ViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | MediaDefaultArgs<ExtArgs>
+  }
+
+  export type $ViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "View"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      media: Prisma.$MediaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      user_id: string
+      media_id: string
+      created_at: Date
+      updated_at: Date
+      records: string
+      last_token: string
+    }, ExtArgs["result"]["view"]>
+    composites: {}
+  }
+
+  type ViewGetPayload<S extends boolean | null | undefined | ViewDefaultArgs> = $Result.GetResult<Prisma.$ViewPayload, S>
+
+  type ViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ViewCountAggregateInputType | true
+    }
+
+  export interface ViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['View'], meta: { name: 'View' } }
+    /**
+     * Find zero or one View that matches the filter.
+     * @param {ViewFindUniqueArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ViewFindUniqueArgs>(args: SelectSubset<T, ViewFindUniqueArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one View that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ViewFindUniqueOrThrowArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ViewFindUniqueOrThrowArgs>(args: SelectSubset<T, ViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first View that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindFirstArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ViewFindFirstArgs>(args?: SelectSubset<T, ViewFindFirstArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first View that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindFirstOrThrowArgs} args - Arguments to find a View
+     * @example
+     * // Get one View
+     * const view = await prisma.view.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ViewFindFirstOrThrowArgs>(args?: SelectSubset<T, ViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Views that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Views
+     * const views = await prisma.view.findMany()
+     * 
+     * // Get first 10 Views
+     * const views = await prisma.view.findMany({ take: 10 })
+     * 
+     * // Only select the `user_id`
+     * const viewWithUser_idOnly = await prisma.view.findMany({ select: { user_id: true } })
+     * 
+     */
+    findMany<T extends ViewFindManyArgs>(args?: SelectSubset<T, ViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a View.
+     * @param {ViewCreateArgs} args - Arguments to create a View.
+     * @example
+     * // Create one View
+     * const View = await prisma.view.create({
+     *   data: {
+     *     // ... data to create a View
+     *   }
+     * })
+     * 
+     */
+    create<T extends ViewCreateArgs>(args: SelectSubset<T, ViewCreateArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Views.
+     * @param {ViewCreateManyArgs} args - Arguments to create many Views.
+     * @example
+     * // Create many Views
+     * const view = await prisma.view.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ViewCreateManyArgs>(args?: SelectSubset<T, ViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Views and returns the data saved in the database.
+     * @param {ViewCreateManyAndReturnArgs} args - Arguments to create many Views.
+     * @example
+     * // Create many Views
+     * const view = await prisma.view.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Views and only return the `user_id`
+     * const viewWithUser_idOnly = await prisma.view.createManyAndReturn({
+     *   select: { user_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ViewCreateManyAndReturnArgs>(args?: SelectSubset<T, ViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a View.
+     * @param {ViewDeleteArgs} args - Arguments to delete one View.
+     * @example
+     * // Delete one View
+     * const View = await prisma.view.delete({
+     *   where: {
+     *     // ... filter to delete one View
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ViewDeleteArgs>(args: SelectSubset<T, ViewDeleteArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one View.
+     * @param {ViewUpdateArgs} args - Arguments to update one View.
+     * @example
+     * // Update one View
+     * const view = await prisma.view.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ViewUpdateArgs>(args: SelectSubset<T, ViewUpdateArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Views.
+     * @param {ViewDeleteManyArgs} args - Arguments to filter Views to delete.
+     * @example
+     * // Delete a few Views
+     * const { count } = await prisma.view.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ViewDeleteManyArgs>(args?: SelectSubset<T, ViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Views.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Views
+     * const view = await prisma.view.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ViewUpdateManyArgs>(args: SelectSubset<T, ViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Views and returns the data updated in the database.
+     * @param {ViewUpdateManyAndReturnArgs} args - Arguments to update many Views.
+     * @example
+     * // Update many Views
+     * const view = await prisma.view.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Views and only return the `user_id`
+     * const viewWithUser_idOnly = await prisma.view.updateManyAndReturn({
+     *   select: { user_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ViewUpdateManyAndReturnArgs>(args: SelectSubset<T, ViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one View.
+     * @param {ViewUpsertArgs} args - Arguments to update or create a View.
+     * @example
+     * // Update or create a View
+     * const view = await prisma.view.upsert({
+     *   create: {
+     *     // ... data to create a View
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the View we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ViewUpsertArgs>(args: SelectSubset<T, ViewUpsertArgs<ExtArgs>>): Prisma__ViewClient<$Result.GetResult<Prisma.$ViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Views.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewCountArgs} args - Arguments to filter Views to count.
+     * @example
+     * // Count the number of Views
+     * const count = await prisma.view.count({
+     *   where: {
+     *     // ... the filter for the Views we want to count
+     *   }
+     * })
+    **/
+    count<T extends ViewCountArgs>(
+      args?: Subset<T, ViewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ViewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a View.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ViewAggregateArgs>(args: Subset<T, ViewAggregateArgs>): Prisma.PrismaPromise<GetViewAggregateType<T>>
+
+    /**
+     * Group by View.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ViewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ViewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ViewGroupByArgs['orderBy'] }
+        : { orderBy?: ViewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the View model
+   */
+  readonly fields: ViewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for View.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    media<T extends MediaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaDefaultArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the View model
+   */
+  interface ViewFieldRefs {
+    readonly user_id: FieldRef<"View", 'String'>
+    readonly media_id: FieldRef<"View", 'String'>
+    readonly created_at: FieldRef<"View", 'DateTime'>
+    readonly updated_at: FieldRef<"View", 'DateTime'>
+    readonly records: FieldRef<"View", 'String'>
+    readonly last_token: FieldRef<"View", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * View findUnique
+   */
+  export type ViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View findUniqueOrThrow
+   */
+  export type ViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View findFirst
+   */
+  export type ViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Views.
+     */
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View findFirstOrThrow
+   */
+  export type ViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which View to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Views.
+     */
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View findMany
+   */
+  export type ViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter, which Views to fetch.
+     */
+    where?: ViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Views to fetch.
+     */
+    orderBy?: ViewOrderByWithRelationInput | ViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Views.
+     */
+    cursor?: ViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Views from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Views.
+     */
+    skip?: number
+    distinct?: ViewScalarFieldEnum | ViewScalarFieldEnum[]
+  }
+
+  /**
+   * View create
+   */
+  export type ViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a View.
+     */
+    data: XOR<ViewCreateInput, ViewUncheckedCreateInput>
+  }
+
+  /**
+   * View createMany
+   */
+  export type ViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Views.
+     */
+    data: ViewCreateManyInput | ViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * View createManyAndReturn
+   */
+  export type ViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * The data used to create many Views.
+     */
+    data: ViewCreateManyInput | ViewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * View update
+   */
+  export type ViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a View.
+     */
+    data: XOR<ViewUpdateInput, ViewUncheckedUpdateInput>
+    /**
+     * Choose, which View to update.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View updateMany
+   */
+  export type ViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Views.
+     */
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyInput>
+    /**
+     * Filter which Views to update
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * View updateManyAndReturn
+   */
+  export type ViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * The data used to update Views.
+     */
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyInput>
+    /**
+     * Filter which Views to update
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * View upsert
+   */
+  export type ViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the View to update in case it exists.
+     */
+    where: ViewWhereUniqueInput
+    /**
+     * In case the View found by the `where` argument doesn't exist, create a new View with this data.
+     */
+    create: XOR<ViewCreateInput, ViewUncheckedCreateInput>
+    /**
+     * In case the View was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ViewUpdateInput, ViewUncheckedUpdateInput>
+  }
+
+  /**
+   * View delete
+   */
+  export type ViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
+    /**
+     * Filter which View to delete.
+     */
+    where: ViewWhereUniqueInput
+  }
+
+  /**
+   * View deleteMany
+   */
+  export type ViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Views to delete
+     */
+    where?: ViewWhereInput
+    /**
+     * Limit how many Views to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * View without action
+   */
+  export type ViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the View
+     */
+    select?: ViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the View
+     */
+    omit?: ViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ViewInclude<ExtArgs> | null
   }
 
 
@@ -3267,6 +4535,18 @@ export namespace Prisma {
   };
 
   export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum]
+
+
+  export const ViewScalarFieldEnum: {
+    user_id: 'user_id',
+    media_id: 'media_id',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    records: 'records',
+    last_token: 'last_token'
+  };
+
+  export type ViewScalarFieldEnum = (typeof ViewScalarFieldEnum)[keyof typeof ViewScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3415,6 +4695,7 @@ export namespace Prisma {
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     domain?: EnumUserDomainFilter<"User"> | $Enums.UserDomain
     uploads?: MediaListRelationFilter
+    views?: ViewListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3428,6 +4709,7 @@ export namespace Prisma {
     role?: SortOrder
     domain?: SortOrder
     uploads?: MediaOrderByRelationAggregateInput
+    views?: ViewOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3444,6 +4726,7 @@ export namespace Prisma {
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     domain?: EnumUserDomainFilter<"User"> | $Enums.UserDomain
     uploads?: MediaListRelationFilter
+    views?: ViewListRelationFilter
   }, "id" | "email" | "cpf">
 
   export type UserOrderByWithAggregationInput = {
@@ -3488,6 +4771,7 @@ export namespace Prisma {
     hash?: StringFilter<"Media"> | string
     metadata?: JsonFilter<"Media">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    views?: ViewListRelationFilter
   }
 
   export type MediaOrderByWithRelationInput = {
@@ -3499,6 +4783,7 @@ export namespace Prisma {
     hash?: SortOrder
     metadata?: SortOrder
     user?: UserOrderByWithRelationInput
+    views?: ViewOrderByRelationAggregateInput
   }
 
   export type MediaWhereUniqueInput = Prisma.AtLeast<{
@@ -3513,6 +4798,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Media"> | Date | string
     metadata?: JsonFilter<"Media">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    views?: ViewListRelationFilter
   }, "id" | "filename" | "hash">
 
   export type MediaOrderByWithAggregationInput = {
@@ -3541,6 +4827,70 @@ export namespace Prisma {
     metadata?: JsonWithAggregatesFilter<"Media">
   }
 
+  export type ViewWhereInput = {
+    AND?: ViewWhereInput | ViewWhereInput[]
+    OR?: ViewWhereInput[]
+    NOT?: ViewWhereInput | ViewWhereInput[]
+    user_id?: StringFilter<"View"> | string
+    media_id?: StringFilter<"View"> | string
+    created_at?: DateTimeFilter<"View"> | Date | string
+    updated_at?: DateTimeFilter<"View"> | Date | string
+    records?: StringFilter<"View"> | string
+    last_token?: StringFilter<"View"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    media?: XOR<MediaScalarRelationFilter, MediaWhereInput>
+  }
+
+  export type ViewOrderByWithRelationInput = {
+    user_id?: SortOrder
+    media_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    records?: SortOrder
+    last_token?: SortOrder
+    user?: UserOrderByWithRelationInput
+    media?: MediaOrderByWithRelationInput
+  }
+
+  export type ViewWhereUniqueInput = Prisma.AtLeast<{
+    user_id_media_id?: ViewUser_idMedia_idCompoundUniqueInput
+    AND?: ViewWhereInput | ViewWhereInput[]
+    OR?: ViewWhereInput[]
+    NOT?: ViewWhereInput | ViewWhereInput[]
+    user_id?: StringFilter<"View"> | string
+    media_id?: StringFilter<"View"> | string
+    created_at?: DateTimeFilter<"View"> | Date | string
+    updated_at?: DateTimeFilter<"View"> | Date | string
+    records?: StringFilter<"View"> | string
+    last_token?: StringFilter<"View"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    media?: XOR<MediaScalarRelationFilter, MediaWhereInput>
+  }, "user_id_media_id">
+
+  export type ViewOrderByWithAggregationInput = {
+    user_id?: SortOrder
+    media_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    records?: SortOrder
+    last_token?: SortOrder
+    _count?: ViewCountOrderByAggregateInput
+    _max?: ViewMaxOrderByAggregateInput
+    _min?: ViewMinOrderByAggregateInput
+  }
+
+  export type ViewScalarWhereWithAggregatesInput = {
+    AND?: ViewScalarWhereWithAggregatesInput | ViewScalarWhereWithAggregatesInput[]
+    OR?: ViewScalarWhereWithAggregatesInput[]
+    NOT?: ViewScalarWhereWithAggregatesInput | ViewScalarWhereWithAggregatesInput[]
+    user_id?: StringWithAggregatesFilter<"View"> | string
+    media_id?: StringWithAggregatesFilter<"View"> | string
+    created_at?: DateTimeWithAggregatesFilter<"View"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"View"> | Date | string
+    records?: StringWithAggregatesFilter<"View"> | string
+    last_token?: StringWithAggregatesFilter<"View"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     created_at?: Date | string
@@ -3552,6 +4902,7 @@ export namespace Prisma {
     role?: $Enums.UserRole
     domain?: $Enums.UserDomain
     uploads?: MediaCreateNestedManyWithoutUserInput
+    views?: ViewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3565,6 +4916,7 @@ export namespace Prisma {
     role?: $Enums.UserRole
     domain?: $Enums.UserDomain
     uploads?: MediaUncheckedCreateNestedManyWithoutUserInput
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3578,6 +4930,7 @@ export namespace Prisma {
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
     uploads?: MediaUpdateManyWithoutUserNestedInput
+    views?: ViewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3591,6 +4944,7 @@ export namespace Prisma {
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
     uploads?: MediaUncheckedUpdateManyWithoutUserNestedInput
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3637,6 +4991,7 @@ export namespace Prisma {
     hash: string
     metadata: JsonNullValueInput | InputJsonValue
     user: UserCreateNestedOneWithoutUploadsInput
+    views?: ViewCreateNestedManyWithoutMediaInput
   }
 
   export type MediaUncheckedCreateInput = {
@@ -3647,6 +5002,7 @@ export namespace Prisma {
     filename: string
     hash: string
     metadata: JsonNullValueInput | InputJsonValue
+    views?: ViewUncheckedCreateNestedManyWithoutMediaInput
   }
 
   export type MediaUpdateInput = {
@@ -3657,6 +5013,7 @@ export namespace Prisma {
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
     user?: UserUpdateOneRequiredWithoutUploadsNestedInput
+    views?: ViewUpdateManyWithoutMediaNestedInput
   }
 
   export type MediaUncheckedUpdateInput = {
@@ -3667,6 +5024,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
+    views?: ViewUncheckedUpdateManyWithoutMediaNestedInput
   }
 
   export type MediaCreateManyInput = {
@@ -3696,6 +5054,67 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type ViewCreateInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+    user: UserCreateNestedOneWithoutViewsInput
+    media: MediaCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateInput = {
+    user_id: string
+    media_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
+  export type ViewUpdateInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutViewsNestedInput
+    media?: MediaUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    media_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ViewCreateManyInput = {
+    user_id: string
+    media_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
+  export type ViewUpdateManyMutationInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ViewUncheckedUpdateManyInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    media_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3759,12 +5178,22 @@ export namespace Prisma {
     none?: MediaWhereInput
   }
 
+  export type ViewListRelationFilter = {
+    every?: ViewWhereInput
+    some?: ViewWhereInput
+    none?: ViewWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type MediaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ViewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3956,6 +5385,43 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
+  export type MediaScalarRelationFilter = {
+    is?: MediaWhereInput
+    isNot?: MediaWhereInput
+  }
+
+  export type ViewUser_idMedia_idCompoundUniqueInput = {
+    user_id: string
+    media_id: string
+  }
+
+  export type ViewCountOrderByAggregateInput = {
+    user_id?: SortOrder
+    media_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    records?: SortOrder
+    last_token?: SortOrder
+  }
+
+  export type ViewMaxOrderByAggregateInput = {
+    user_id?: SortOrder
+    media_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    records?: SortOrder
+    last_token?: SortOrder
+  }
+
+  export type ViewMinOrderByAggregateInput = {
+    user_id?: SortOrder
+    media_id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    records?: SortOrder
+    last_token?: SortOrder
+  }
+
   export type MediaCreateNestedManyWithoutUserInput = {
     create?: XOR<MediaCreateWithoutUserInput, MediaUncheckedCreateWithoutUserInput> | MediaCreateWithoutUserInput[] | MediaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MediaCreateOrConnectWithoutUserInput | MediaCreateOrConnectWithoutUserInput[]
@@ -3963,11 +5429,25 @@ export namespace Prisma {
     connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
   }
 
+  export type ViewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+  }
+
   export type MediaUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<MediaCreateWithoutUserInput, MediaUncheckedCreateWithoutUserInput> | MediaCreateWithoutUserInput[] | MediaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MediaCreateOrConnectWithoutUserInput | MediaCreateOrConnectWithoutUserInput[]
     createMany?: MediaCreateManyUserInputEnvelope
     connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+  }
+
+  export type ViewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4004,6 +5484,20 @@ export namespace Prisma {
     deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
   }
 
+  export type ViewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutUserInput | ViewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutUserInput | ViewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutUserInput | ViewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
   export type MediaUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<MediaCreateWithoutUserInput, MediaUncheckedCreateWithoutUserInput> | MediaCreateWithoutUserInput[] | MediaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MediaCreateOrConnectWithoutUserInput | MediaCreateOrConnectWithoutUserInput[]
@@ -4018,10 +5512,38 @@ export namespace Prisma {
     deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
   }
 
+  export type ViewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput> | ViewCreateWithoutUserInput[] | ViewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutUserInput | ViewCreateOrConnectWithoutUserInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutUserInput | ViewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ViewCreateManyUserInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutUserInput | ViewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutUserInput | ViewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutUploadsInput = {
     create?: XOR<UserCreateWithoutUploadsInput, UserUncheckedCreateWithoutUploadsInput>
     connectOrCreate?: UserCreateOrConnectWithoutUploadsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type ViewCreateNestedManyWithoutMediaInput = {
+    create?: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput> | ViewCreateWithoutMediaInput[] | ViewUncheckedCreateWithoutMediaInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutMediaInput | ViewCreateOrConnectWithoutMediaInput[]
+    createMany?: ViewCreateManyMediaInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+  }
+
+  export type ViewUncheckedCreateNestedManyWithoutMediaInput = {
+    create?: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput> | ViewCreateWithoutMediaInput[] | ViewUncheckedCreateWithoutMediaInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutMediaInput | ViewCreateOrConnectWithoutMediaInput[]
+    createMany?: ViewCreateManyMediaInputEnvelope
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
   }
 
   export type UserUpdateOneRequiredWithoutUploadsNestedInput = {
@@ -4030,6 +5552,62 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUploadsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUploadsInput, UserUpdateWithoutUploadsInput>, UserUncheckedUpdateWithoutUploadsInput>
+  }
+
+  export type ViewUpdateManyWithoutMediaNestedInput = {
+    create?: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput> | ViewCreateWithoutMediaInput[] | ViewUncheckedCreateWithoutMediaInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutMediaInput | ViewCreateOrConnectWithoutMediaInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutMediaInput | ViewUpsertWithWhereUniqueWithoutMediaInput[]
+    createMany?: ViewCreateManyMediaInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutMediaInput | ViewUpdateWithWhereUniqueWithoutMediaInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutMediaInput | ViewUpdateManyWithWhereWithoutMediaInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
+  export type ViewUncheckedUpdateManyWithoutMediaNestedInput = {
+    create?: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput> | ViewCreateWithoutMediaInput[] | ViewUncheckedCreateWithoutMediaInput[]
+    connectOrCreate?: ViewCreateOrConnectWithoutMediaInput | ViewCreateOrConnectWithoutMediaInput[]
+    upsert?: ViewUpsertWithWhereUniqueWithoutMediaInput | ViewUpsertWithWhereUniqueWithoutMediaInput[]
+    createMany?: ViewCreateManyMediaInputEnvelope
+    set?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    disconnect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    delete?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    connect?: ViewWhereUniqueInput | ViewWhereUniqueInput[]
+    update?: ViewUpdateWithWhereUniqueWithoutMediaInput | ViewUpdateWithWhereUniqueWithoutMediaInput[]
+    updateMany?: ViewUpdateManyWithWhereWithoutMediaInput | ViewUpdateManyWithWhereWithoutMediaInput[]
+    deleteMany?: ViewScalarWhereInput | ViewScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutViewsInput = {
+    create?: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutViewsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MediaCreateNestedOneWithoutViewsInput = {
+    create?: XOR<MediaCreateWithoutViewsInput, MediaUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: MediaCreateOrConnectWithoutViewsInput
+    connect?: MediaWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutViewsNestedInput = {
+    create?: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutViewsInput
+    upsert?: UserUpsertWithoutViewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewsInput, UserUpdateWithoutViewsInput>, UserUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type MediaUpdateOneRequiredWithoutViewsNestedInput = {
+    create?: XOR<MediaCreateWithoutViewsInput, MediaUncheckedCreateWithoutViewsInput>
+    connectOrCreate?: MediaCreateOrConnectWithoutViewsInput
+    upsert?: MediaUpsertWithoutViewsInput
+    connect?: MediaWhereUniqueInput
+    update?: XOR<XOR<MediaUpdateToOneWithWhereWithoutViewsInput, MediaUpdateWithoutViewsInput>, MediaUncheckedUpdateWithoutViewsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4205,6 +5783,7 @@ export namespace Prisma {
     filename: string
     hash: string
     metadata: JsonNullValueInput | InputJsonValue
+    views?: ViewCreateNestedManyWithoutMediaInput
   }
 
   export type MediaUncheckedCreateWithoutUserInput = {
@@ -4214,6 +5793,7 @@ export namespace Prisma {
     filename: string
     hash: string
     metadata: JsonNullValueInput | InputJsonValue
+    views?: ViewUncheckedCreateNestedManyWithoutMediaInput
   }
 
   export type MediaCreateOrConnectWithoutUserInput = {
@@ -4223,6 +5803,32 @@ export namespace Prisma {
 
   export type MediaCreateManyUserInputEnvelope = {
     data: MediaCreateManyUserInput | MediaCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ViewCreateWithoutUserInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+    media: MediaCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateWithoutUserInput = {
+    media_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
+  export type ViewCreateOrConnectWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    create: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ViewCreateManyUserInputEnvelope = {
+    data: ViewCreateManyUserInput | ViewCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -4255,6 +5861,34 @@ export namespace Prisma {
     metadata?: JsonFilter<"Media">
   }
 
+  export type ViewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    update: XOR<ViewUpdateWithoutUserInput, ViewUncheckedUpdateWithoutUserInput>
+    create: XOR<ViewCreateWithoutUserInput, ViewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ViewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ViewWhereUniqueInput
+    data: XOR<ViewUpdateWithoutUserInput, ViewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ViewUpdateManyWithWhereWithoutUserInput = {
+    where: ViewScalarWhereInput
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ViewScalarWhereInput = {
+    AND?: ViewScalarWhereInput | ViewScalarWhereInput[]
+    OR?: ViewScalarWhereInput[]
+    NOT?: ViewScalarWhereInput | ViewScalarWhereInput[]
+    user_id?: StringFilter<"View"> | string
+    media_id?: StringFilter<"View"> | string
+    created_at?: DateTimeFilter<"View"> | Date | string
+    updated_at?: DateTimeFilter<"View"> | Date | string
+    records?: StringFilter<"View"> | string
+    last_token?: StringFilter<"View"> | string
+  }
+
   export type UserCreateWithoutUploadsInput = {
     id?: string
     created_at?: Date | string
@@ -4265,6 +5899,7 @@ export namespace Prisma {
     name?: string | null
     role?: $Enums.UserRole
     domain?: $Enums.UserDomain
+    views?: ViewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadsInput = {
@@ -4277,11 +5912,38 @@ export namespace Prisma {
     name?: string | null
     role?: $Enums.UserRole
     domain?: $Enums.UserDomain
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutUploadsInput, UserUncheckedCreateWithoutUploadsInput>
+  }
+
+  export type ViewCreateWithoutMediaInput = {
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+    user: UserCreateNestedOneWithoutViewsInput
+  }
+
+  export type ViewUncheckedCreateWithoutMediaInput = {
+    user_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
+  export type ViewCreateOrConnectWithoutMediaInput = {
+    where: ViewWhereUniqueInput
+    create: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput>
+  }
+
+  export type ViewCreateManyMediaInputEnvelope = {
+    data: ViewCreateManyMediaInput | ViewCreateManyMediaInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutUploadsInput = {
@@ -4305,6 +5967,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
+    views?: ViewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadsInput = {
@@ -4317,6 +5980,147 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ViewUpsertWithWhereUniqueWithoutMediaInput = {
+    where: ViewWhereUniqueInput
+    update: XOR<ViewUpdateWithoutMediaInput, ViewUncheckedUpdateWithoutMediaInput>
+    create: XOR<ViewCreateWithoutMediaInput, ViewUncheckedCreateWithoutMediaInput>
+  }
+
+  export type ViewUpdateWithWhereUniqueWithoutMediaInput = {
+    where: ViewWhereUniqueInput
+    data: XOR<ViewUpdateWithoutMediaInput, ViewUncheckedUpdateWithoutMediaInput>
+  }
+
+  export type ViewUpdateManyWithWhereWithoutMediaInput = {
+    where: ViewScalarWhereInput
+    data: XOR<ViewUpdateManyMutationInput, ViewUncheckedUpdateManyWithoutMediaInput>
+  }
+
+  export type UserCreateWithoutViewsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    cpf?: string | null
+    password?: string | null
+    name?: string | null
+    role?: $Enums.UserRole
+    domain?: $Enums.UserDomain
+    uploads?: MediaCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutViewsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    cpf?: string | null
+    password?: string | null
+    name?: string | null
+    role?: $Enums.UserRole
+    domain?: $Enums.UserDomain
+    uploads?: MediaUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutViewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+  }
+
+  export type MediaCreateWithoutViewsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    filename: string
+    hash: string
+    metadata: JsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutUploadsInput
+  }
+
+  export type MediaUncheckedCreateWithoutViewsInput = {
+    id?: string
+    user_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    filename: string
+    hash: string
+    metadata: JsonNullValueInput | InputJsonValue
+  }
+
+  export type MediaCreateOrConnectWithoutViewsInput = {
+    where: MediaWhereUniqueInput
+    create: XOR<MediaCreateWithoutViewsInput, MediaUncheckedCreateWithoutViewsInput>
+  }
+
+  export type UserUpsertWithoutViewsInput = {
+    update: XOR<UserUpdateWithoutViewsInput, UserUncheckedUpdateWithoutViewsInput>
+    create: XOR<UserCreateWithoutViewsInput, UserUncheckedCreateWithoutViewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutViewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutViewsInput, UserUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type UserUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    cpf?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
+    uploads?: MediaUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    cpf?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    domain?: EnumUserDomainFieldUpdateOperationsInput | $Enums.UserDomain
+    uploads?: MediaUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type MediaUpsertWithoutViewsInput = {
+    update: XOR<MediaUpdateWithoutViewsInput, MediaUncheckedUpdateWithoutViewsInput>
+    create: XOR<MediaCreateWithoutViewsInput, MediaUncheckedCreateWithoutViewsInput>
+    where?: MediaWhereInput
+  }
+
+  export type MediaUpdateToOneWithWhereWithoutViewsInput = {
+    where?: MediaWhereInput
+    data: XOR<MediaUpdateWithoutViewsInput, MediaUncheckedUpdateWithoutViewsInput>
+  }
+
+  export type MediaUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    filename?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    metadata?: JsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutUploadsNestedInput
+  }
+
+  export type MediaUncheckedUpdateWithoutViewsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    filename?: StringFieldUpdateOperationsInput | string
+    hash?: StringFieldUpdateOperationsInput | string
+    metadata?: JsonNullValueInput | InputJsonValue
   }
 
   export type MediaCreateManyUserInput = {
@@ -4328,6 +6132,14 @@ export namespace Prisma {
     metadata: JsonNullValueInput | InputJsonValue
   }
 
+  export type ViewCreateManyUserInput = {
+    media_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
   export type MediaUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4335,6 +6147,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
+    views?: ViewUpdateManyWithoutMediaNestedInput
   }
 
   export type MediaUncheckedUpdateWithoutUserInput = {
@@ -4344,6 +6157,7 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
+    views?: ViewUncheckedUpdateManyWithoutMediaNestedInput
   }
 
   export type MediaUncheckedUpdateManyWithoutUserInput = {
@@ -4353,6 +6167,62 @@ export namespace Prisma {
     filename?: StringFieldUpdateOperationsInput | string
     hash?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type ViewUpdateWithoutUserInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+    media?: MediaUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateWithoutUserInput = {
+    media_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ViewUncheckedUpdateManyWithoutUserInput = {
+    media_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ViewCreateManyMediaInput = {
+    user_id: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    records: string
+    last_token: string
+  }
+
+  export type ViewUpdateWithoutMediaInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutViewsNestedInput
+  }
+
+  export type ViewUncheckedUpdateWithoutMediaInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ViewUncheckedUpdateManyWithoutMediaInput = {
+    user_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: StringFieldUpdateOperationsInput | string
+    last_token?: StringFieldUpdateOperationsInput | string
   }
 
 
